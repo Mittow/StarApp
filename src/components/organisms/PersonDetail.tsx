@@ -1,4 +1,4 @@
-import React from 'react'
+//import React from 'react'
 import { FeatureDetail } from '../molecules/FeatureDetail'
 import { VehicleDetail } from '../molecules/VehicleDetail'
 import { SectionTitle } from '../atoms/SectionTitle'

@@ -1,12 +1,8 @@
 import React from "react";
 import FadeLoader from "react-spinners/ClipLoader";
+import { PSpinnerModel } from "../../models/p.spinner.model";
 
-interface Props {
-  color: string;
-  size: string;
-}
-
-export const Spinner:React.FC<Props> = ({ color, size }) => {
+export const Spinner:React.FC<PSpinnerModel> = ({ color, size }) => {
 
   return (
     <FadeLoader 

@@ -1,11 +1,7 @@
 import React from "react";
+import { PHeaderTitleModel } from "../../models/p.header.title.model";
 
-interface Props {
-  title: string;
-  styles?: string;
-}
-
-export const HeaderTitle: React.FC<Props> = ({ title, styles }) => {
+export const HeaderTitle: React.FC<PHeaderTitleModel> = ({ title, styles }) => {
   return (
     <h1
       className={`w-full h-full text-lg font-bold text-white flex justify-center items-center md:justify-start ${styles}`}

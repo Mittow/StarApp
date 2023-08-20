@@ -1,11 +1,7 @@
 import React from 'react'
+import { PFeatureDetailModel } from '../../models/p.feature.detail.model'
 
-interface Props {
-  feature: string;
-  value: string;
-}
-
-export const FeatureDetail: React.FC<Props> = ({ feature, value }) => {
+export const FeatureDetail: React.FC<PFeatureDetailModel> = ({ feature, value }) => {
   return (
     <div className='h-[49px] border-b border-[rgba(0,0,0,0.3)] flex flex-row justify-between items-center'>
       <span className='font-bold text-[rgba(0,0,0,0.5)] flex-auto'>{ feature }</span>
