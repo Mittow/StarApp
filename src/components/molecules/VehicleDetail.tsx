@@ -1,8 +1,8 @@
 import React from "react";
 import { PVehicleDetailModel } from "../../models/p.vehicle.detail.model";
 import { vehicleApi } from "../../api/vehicle.api";
-import { Failed } from "../atoms/Failed";
-import { Loading } from "./Loading";
+import { NoticeCell } from "../atoms/NoticeCell";
+import { LoadingCell } from "./LoadingCell";
 
 export const VehicleDetail: React.FC<{ key: number; vehicleURL: string }> = ({ vehicleURL }) => {
 
@@ -43,10 +43,10 @@ export const VehicleDetail: React.FC<{ key: number; vehicleURL: string }> = ({ v
 
   if (error) {
     contenido = (
-      <Failed />
+      <NoticeCell />
     );
   } else if (isLoading) {
-    contenido = <Loading />;
+    contenido = <LoadingCell />;
   } else {
     contenido = `${allVehicle}`
   }

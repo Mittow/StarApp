@@ -2,7 +2,7 @@ import React from "react";
 import { PPersonCardModel } from "../../models/p.person.card.model";
 import { homeworldApi } from "../../api/homeworld.api";
 
-export const PersonCard: React.FC<PPersonCardModel> = ({
+export const PersonCell: React.FC<PPersonCardModel> = ({
   name,
   speciesURL,
   homeworldURL

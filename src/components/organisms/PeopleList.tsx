@@ -1,11 +1,11 @@
 import React from "react";
 import PullToRefresh from "react-pull-to-refresh";
 
-import { PersonCard } from "../molecules/PersonCard";
-import { Loading } from "../molecules/Loading";
+import { PersonCell } from "../molecules/PersonCell";
+import { LoadingCell } from "../molecules/LoadingCell";
 import { PeopleModel } from "../../models/people.model";
 import { peopleApi } from "../../api/people.api";
-import { Failed } from "../atoms/Failed";
+import { NoticeCell } from "../atoms/NoticeCell";
 
 interface SelectCard {
   onSelectCard: (r: PeopleModel) => void;
@@ -53,15 +53,15 @@ export const PeopleList: React.FC<SelectCard> = ({ onSelectCard, styles }) => {
   if (error) {
     contenido = (
       <PullToRefresh onRefresh={handleRefresh}>
-        <Failed />
+        <NoticeCell />
       </PullToRefresh>
     );
   } else if (isLoading1) {
-    contenido = <Loading />;
+    contenido = <LoadingCell />;
   } else {
     contenido = allPeople?.map((r, index) => (
       <div key={index} onClick={() => onSelectCard(r)}>
-        <PersonCard
+        <PersonCell
           name={r.name}
           speciesURL={r.species}
           homeworldURL={r.homeworld}
@@ -94,7 +94,7 @@ export const PeopleList: React.FC<SelectCard> = ({ onSelectCard, styles }) => {
       {!allPeople ? (
         ""
       ) : isLoading2 ? (
-        <Loading />
+        <LoadingCell />
       ) : (
         <button
           className="h-[69px] flex justify-center items-center"
