@@ -1,4 +1,4 @@
 export interface PHeaderTitleModel {
-  title: string;
+  title: string | undefined;
   styles?: string;
 }

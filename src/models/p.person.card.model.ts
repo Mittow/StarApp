@@ -4,6 +4,6 @@ export interface PPersonCardModel {
   skin_color?: string;
   eye_color?: string;
   birth_year?: string;
-  species?: string;
-  homeworld?: string;
+  speciesURL?: string[];
+  homeworldURL?: string;
 }

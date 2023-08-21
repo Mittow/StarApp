@@ -1,3 +1,3 @@
 export interface PVehicleDetailModel {
-  vehicle: string;
+  name: string;
 }
