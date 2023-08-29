@@ -1,4 +1,4 @@
 export interface HeaderTitlePropModel {
-  title: string | undefined;
+  title?: string | undefined;
   styles?: string;
 }

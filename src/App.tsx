@@ -11,15 +11,17 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
+
       <Routes>
-        {/* <Route path="/:slug" element={<Header />} /> */} 
+
         <Route path="/" element={<HomePage />}>
           {!isMobile && <Route path=":slug" element={<PersonDetail />} />}
         </Route>
 
         {isMobile && <Route path=":slug" element={<PersonDetail />} />}
-        <Route path="*" element={<p>Not Found</p>} />
 
+        <Route path="*" element={<p>Not Found</p>} />
+        
       </Routes>
     </BrowserRouter>
   );
