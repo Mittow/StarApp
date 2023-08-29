@@ -1,107 +1,53 @@
-import React from "react";
 import PullToRefresh from "react-pull-to-refresh";
+import React from "react";
 
 import { PersonCell } from "../molecules/PersonCell";
 import { LoadingCell } from "../molecules/LoadingCell";
-import { PeopleModel } from "../../models/people.model";
-import { peopleApi } from "../../api/people.api";
 import { NoticeCell } from "../atoms/NoticeCell";
+import { PeopleService } from "../../services/peopleService";
 
-interface SelectCard {
-  onSelectCard: (r: PeopleModel) => void;
-  styles?: string;
-}
-
-export const PeopleList: React.FC<SelectCard> = ({ onSelectCard, styles }) => {
-  let contenido;
-
-  const [allPeople, setAllPeople] = React.useState<PeopleModel[] | null>(null);
-  const [nextPageUrl, setNextPageUrl] = React.useState("");
-  const [error, setError] = React.useState(null);
-  const [isLoading1, setIsLoading1] = React.useState(false);
-  const [isLoading2, setIsLoading2] = React.useState(false);
-
-  //* CARGANDO DATOS *//
-  React.useEffect(() => {
-    getPeople();
-  }, []);
-
-  //* CONSUMIENDO API *//
-  function getPeople() {
-    setIsLoading1(true);
-    peopleApi
-      .getAll()
-      .then((r) => {
-        const result = r.data.results;
-        setAllPeople(result);
-        setNextPageUrl(r.data.next);
-      })
-      .catch((e) => {
-        console.log(e);
-        setError(e);
-      })
-      .finally(() => {
-        setIsLoading1(false);
-      });
-  }
+export const PeopleList = () => {
+  const peopleService = PeopleService();
 
   //* FUNCION PARA MANEJAR LA ACCION DE "PULL-TO-REFRESH" *//
   const handleRefresh = async () => {
-    getPeople();
+    peopleService.allPeople;
   };
 
-  if (error) {
-    contenido = (
-      <PullToRefresh onRefresh={handleRefresh}>
-        <NoticeCell />
-      </PullToRefresh>
-    );
-  } else if (isLoading1) {
-    contenido = <LoadingCell />;
-  } else {
-    contenido = allPeople?.map((r, index) => (
-      <div key={index} onClick={() => onSelectCard(r)}>
-        <PersonCell
-          name={r.name}
-          speciesURL={r.species}
-          homeworldURL={r.homeworld}
-        />
-      </div>
-    ));
-  }
-
-  const handleLoadMore = async () => {
-    if (nextPageUrl) {
-      setIsLoading2(true);
-      const response = await fetch(nextPageUrl);
-      const data = await response.json();
-
-      // Actualizar los datos existentes con los nuevos datos
-      // Asumiendo que los datos se almacenan en un estado llamado "cardsData"
-      setAllPeople((prevData) => [
-        ...(prevData as PeopleModel[]),
-        ...data.results,
-      ]);
-      // Actualizar la URL de la siguiente página
-      setNextPageUrl(data.next);
-      setIsLoading2(false);
-    }
-  };
+  React.useEffect(() => {
+    peopleService.allPeople;
+  }, [peopleService.allPeople]);
 
   return (
-    <aside className={`w-full flex flex-col md:w-1/4 md:border-r border-[rgba(0,0,0,0.3)] !${styles}`}>
-      {contenido}
-      {!allPeople ? (
-        ""
-      ) : isLoading2 ? (
-        <LoadingCell />
+    <aside
+      className={`w-full flex flex-col md:w-1/4 md:border-r border-[rgba(0,0,0,0.3)]`}
+    >
+      {peopleService.error ? (
+        <PullToRefresh onRefresh={handleRefresh}>
+          <NoticeCell />
+        </PullToRefresh>
       ) : (
-        <button
-          className="h-[69px] flex justify-center items-center"
-          onClick={handleLoadMore}
-        >
-          Más...
-        </button>
+        <>
+          {peopleService.allPeople && peopleService.allPeople.map((character, index) => (
+            <PersonCell
+              key={index}
+              name={character.name}
+              homeworldURL={character.homeworld}
+              speciesURL={character.species}
+            />
+          ))}
+
+          {peopleService.isLoading && <LoadingCell />}
+          
+          {!peopleService.isLoading && peopleService.nextPage && (
+            <button
+              className="h-[69px] flex justify-center items-center"
+              onClick={peopleService.fetchNextPage}
+            >
+              Cargar más...
+            </button>
+          )}
+        </>
       )}
     </aside>
   );

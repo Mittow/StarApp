@@ -1,8 +1,8 @@
 import React from "react";
 import FadeLoader from "react-spinners/ClipLoader";
-import { PSpinnerModel } from "../../models/p.spinner.model";
+import { SpinnerPropModel } from "../../models/spinnerPropModel";
 
-export const LoadingIndicator:React.FC<PSpinnerModel> = ({ color, size }) => {
+export const LoadingIndicator:React.FC<SpinnerPropModel> = ({ color="#828282" , size="20px" }) => {
 
   return (
     <FadeLoader 

@@ -1,30 +1,38 @@
-import React from "react";
 import { FeatureDetail } from "../molecules/FeatureDetail";
-import { VehicleDetail } from "../molecules/VehicleDetail";
 import { SectionHeader } from "../atoms/SectionHeader";
-import { PeopleModel } from "../../models/people.model";
+import { useParams } from "react-router-dom";
+import { PeopleService } from "../../services/peopleService";
+import { VehicleDetail } from "../molecules/VehicleDetail";
+import { PeopleModel } from "../../models/peopleModel";
+import React from "react";
 
-export const PersonDetail: React.FC<PeopleModel> = ({
-  hair_color,
-  skin_color,
-  eye_color,
-  birth_year,
-  vehicles,
-  styles
-}) => {
+export const PersonDetail = () => {
+
+  const [response, setResponse] = React.useState<PeopleModel | null>(null);
+  const peopleService = PeopleService();
+
+  const { slug } = useParams();
+  
+  React.useEffect(() => {
+    peopleService.getCharacterByName(slug ?? '').then((res) => {
+      setResponse(res);
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug])
 
   return (
-    <section className={`p-4 w-full md:px-14 md:py-2 md:w-3/4 !${styles}`}>
+    <section className={`p-4 w-full md:px-14 md:py-2 md:w-3/4`}>
       {/* FEATURES */}
       <SectionHeader title="General Information" />
-      <FeatureDetail feature="Eye Color" value={eye_color} />
-      <FeatureDetail feature="Hair Color" value={hair_color} />
-      <FeatureDetail feature="Skin Color" value={skin_color} />
-      <FeatureDetail feature="Birth Year" value={birth_year} />
+      <FeatureDetail feature="Eye Color" value={response?.eye_color} />
+      <FeatureDetail feature="Hair Color" value={response?.hair_color} />
+      <FeatureDetail feature="Skin Color" value={response?.skin_color} />
+      <FeatureDetail feature="Birth Year" value={response?.birth_year} />
+
       {/* VEHICLES */}
       <SectionHeader title="Vehicle" />
       {
-        !Array.isArray(vehicles) ? '' : vehicles.map((vehicleURL, index) => (
+        !Array.isArray(response?.vehicles) ? '' : response?.vehicles.map((vehicleURL, index) => (
           <VehicleDetail key={index} vehicleURL={vehicleURL} />
         ))
       }

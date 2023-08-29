@@ -1,9 +1,9 @@
-import { instance } from "./base.api";
+import { instance } from "./baseApi";
 
 const endpoint = "vehicles";
 
 export const vehicleApi = {
-  getAll: function(urlVehicle: (string | undefined)) {
+  getAllVehicles: function(urlVehicle: (string | undefined)) {
     return instance.get(`${endpoint}/${urlVehicle}`);
   },
 }

@@ -6,6 +6,6 @@ export interface PeopleModel {
   birth_year: string;
   homeworld?: string;
   species?: string[];
-  vehicles: string[];
+  vehicles?: string[];
   styles?: string;
 }
