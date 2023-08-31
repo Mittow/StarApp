@@ -9,7 +9,7 @@ import { PeopleService } from "../../services/peopleService";
 export const PeopleList = () => {
   const peopleService = PeopleService();
 
-  //* FUNCION PARA MANEJAR LA ACCION DE "PULL-TO-REFRESH" *//
+  // FUNCION PARA MANEJAR LA ACCION DE "PULL-TO-REFRESH"
   const handleRefresh = async () => {
     peopleService.allPeople;
   };
