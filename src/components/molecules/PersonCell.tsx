@@ -5,7 +5,7 @@ import { HomeworldService } from "../../services/homeworldService";
 import { LoadingIndicator } from "../atoms/LoadingIndicator";
 import { SpecieService } from "../../services/specieService";
 
-export const PersonCell: React.FC<PersonCellPropModel> = ({
+export const PersonCell: React.FC<PersonCellPropModel> = React.memo(({
   name,
   speciesURL,
   homeworldURL,
@@ -49,4 +49,4 @@ export const PersonCell: React.FC<PersonCellPropModel> = ({
       </div>
     </Link>
   );
-};
+});

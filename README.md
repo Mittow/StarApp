@@ -18,4 +18,4 @@ Tener instalado o activado el manejador de paquetes pnpm (https://pnpm.io/es/).
 - Instalación desde npm: `npm install -g pnpm`.
 - Activalo si tienes Node.js(v16.13 a más): `corepack enable`.
 
-Versión: `1.0.0`
+### Versión: `1.0.0`

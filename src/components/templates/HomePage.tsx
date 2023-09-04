@@ -1,4 +1,4 @@
-import { useIsMobile } from "../../context/IsMobile";
+import { useIsMobile } from "../../context/IsMobileContext";
 import { PeopleList } from "../organisms/PeopleList";
 import { Outlet } from "react-router-dom";
 
@@ -9,7 +9,7 @@ export const HomePage = () => {
     <div className="min-h-screen flex flex-col">
       <main className="p-0 flex flex-row md:flex-grow ">
         <PeopleList />
-        { !isMobile ? <Outlet /> : '' }
+        {!isMobile ? <Outlet /> : ""}
       </main>
     </div>
   );

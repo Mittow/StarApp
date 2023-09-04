@@ -4,45 +4,42 @@ import React from "react";
 import { PersonCell } from "../molecules/PersonCell";
 import { LoadingCell } from "../molecules/LoadingCell";
 import { NoticeCell } from "../atoms/NoticeCell";
-import { PeopleService } from "../../services/peopleService";
+import { useData } from "../../context/DataContext";
 
-export const PeopleList = () => {
-  const peopleService = PeopleService();
+export const PeopleList = React.memo(() => {
+  const { allPeople, isLoading, error, nextPage, fetchNextPage } = useData();
 
   // FUNCION PARA MANEJAR LA ACCION DE "PULL-TO-REFRESH"
   const handleRefresh = async () => {
-    peopleService.allPeople;
+    allPeople;
   };
-
-  React.useEffect(() => {
-    peopleService.allPeople;
-  }, [peopleService.allPeople]);
 
   return (
     <aside
       className={`w-full flex flex-col md:w-1/4 md:border-r border-[rgba(0,0,0,0.3)]`}
     >
-      {peopleService.error ? (
+      {error ? (
         <PullToRefresh onRefresh={handleRefresh}>
           <NoticeCell />
         </PullToRefresh>
       ) : (
         <>
-          {peopleService.allPeople && peopleService.allPeople.map((character, index) => (
-            <PersonCell
-              key={index}
-              name={character.name}
-              homeworldURL={character.homeworld}
-              speciesURL={character.species}
-            />
-          ))}
+          {allPeople &&
+            allPeople.map((character, index) => (
+              <PersonCell
+                key={index}
+                name={character.name}
+                homeworldURL={character.homeworld}
+                speciesURL={character.species}
+              />
+            ))}
 
-          {peopleService.isLoading && <LoadingCell />}
-          
-          {!peopleService.isLoading && peopleService.nextPage && (
+          {isLoading && <LoadingCell />}
+
+          {!isLoading && nextPage && (
             <button
               className="h-[69px] flex justify-center items-center"
-              onClick={peopleService.fetchNextPage}
+              onClick={fetchNextPage}
             >
               Cargar más...
             </button>
@@ -51,4 +48,4 @@ export const PeopleList = () => {
       )}
     </aside>
   );
-};
+});

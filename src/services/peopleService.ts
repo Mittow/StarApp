@@ -1,16 +1,24 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
 import { PeopleModel } from '../models/peopleModel';
 import { peopleApi } from '../api/peopleApi';
+import { useParams } from 'react-router-dom';
 
 export const PeopleService = () => {
-  const [allPeople, setAllPeople] = useState<PeopleModel[] | null>(null);
-  const [nextPage, setNextPage] = useState<string>('');
-  const [error, setError] = useState<Error | unknown>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { slug } = useParams();
 
-  useEffect(() => {
+  const [allPeople, setAllPeople] = React.useState<PeopleModel[] | null>(null);
+  const [characterDetail, setCharacterDetail] = React.useState<PeopleModel | null>(null);
+  const [nextPage, setNextPage] = React.useState<string>('');
+  const [error, setError] = React.useState<Error | unknown>(null);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
     getPeople();
   }, []);
+
+  React.useEffect(() => {
+    slug && getCharacterByName(slug ?? '');
+  }, [slug]);
 
   const getPeople = async () => {
     setIsLoading(true);
@@ -32,7 +40,7 @@ export const PeopleService = () => {
     try {
       const response = await peopleApi.getByName(name);
       const result = response.data.results[0];
-      return result;
+      setCharacterDetail(result);
     } catch (e) {
       console.log(e);
       setError(e);
@@ -61,5 +69,5 @@ export const PeopleService = () => {
     }
   };
 
-  return { allPeople, nextPage, fetchNextPage, getCharacterByName, error, isLoading };
+  return { allPeople, nextPage, fetchNextPage, getCharacterByName, characterDetail, error, isLoading };
 };
